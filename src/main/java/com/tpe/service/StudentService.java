@@ -19,6 +19,7 @@ public class StudentService { // mavc dersinde interface kullanmıştık ancak b
     @Autowired
     private StudentRepository studentRepository;
 
+
     public List<Student> getAll() {
         return studentRepository.findAll(); // findAll() arka planda "select * from Student"
     }
@@ -77,7 +78,7 @@ public class StudentService { // mavc dersinde interface kullanmıştık ancak b
         return studentRepository.findAll(pageable);
     }
 
-    public List<Student> findByLastName(String lastname) {
+    public List<Student> findStudent(String lastname) {
         return studentRepository.findByLastName(lastname);
     }
 

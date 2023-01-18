@@ -160,7 +160,7 @@ service katmanını controller ile haberleşmesi  DTO ile  repository ile POJO c
 
     @GetMapping("/querylastname")
     public ResponseEntity<List<Student>> getStudentByLastName(@RequestParam("lastName") String lastname) {
-        List<Student> list = studentService.findByLastName(lastname);
+        List<Student> list = studentService.findStudent(lastname);
 
         return ResponseEntity.ok(list);
 
