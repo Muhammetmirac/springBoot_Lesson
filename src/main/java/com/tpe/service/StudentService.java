@@ -51,9 +51,11 @@ public class StudentService { // mavc dersinde interface kullanmıştık ancak b
                        student.getEmail()----->>> bizim pojo classında oluşturmuş olduğumuz ve repository üzerinden DB den gelen datadır
      */
     public void updateStudent(Long id, StudentDTO studentDTO) {
+        // kullanıcıdan gelen mail adresi DB de var mı onu kontrol ettik
         boolean existEmail = studentRepository.existsByEmail(studentDTO.getEmail());
         Student student = findStudent(id);
 
+        //kullanıcıdan gelen mail db varsa ve
         if (existEmail && !studentDTO.getEmail().equals(student.getEmail())) {  // && operatoru mukemmeliyeci oldugundan true&&true olması lazım "!" dikkat etmek gerekir
             throw new ConflictException("Email is already exist ");
             /*

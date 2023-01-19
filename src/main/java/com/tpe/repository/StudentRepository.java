@@ -28,16 +28,19 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
 
     //*** JPQL  *******
-    @Query("SELECT s from Student s where s.grade = :pGrade")
+    @Query("SELECT s from Student s where s.grade = :pGrade")//:pGrade şeklinde yazıldıgında dinamik bir yapı oluşturmus oluruz
+                                                              //istediğimiz değeri girebiliriz
     // JPQL sorgusu yapacağımız için @Query anostasyonunu koyduk      Student ---> s olarak kullanacagız
     List<Student> findAllEqualsGrade(@Param("pGrade") Integer grade);
 
 
     //native DQL ile
-    @Query(value = "select * from Student s where s.grade = :pGrade ", nativeQuery = true)
-    List<Student> findAllEqualsGradeWithSQL(@Param("pGrade") Integer grade);
+    @Query(value = "select * from Student s where s.grade = :pGrade ", nativeQuery = true) //value yazmayı unutmuyoruz
+    List<Student> findAllEqualsGradeWithSQL(@Param("pGrade") Integer grade);  //@Param anostasyonu ile Integer grade değerini al pGrade değerine setle diyoruz
 
-    @Query("SELECT new com.tpe.dto.StudentDTO(s) FROM Student s WHERE s.id=:id ")   // Student s
+    //jpql
+    @Query("SELECT new com.tpe.dto.StudentDTO(s) FROM Student s WHERE s.id=:id ")   // burada StudentDTO(s---> parametreli constructor içerisindeki 'student' ı temsil ediyor )
+                                                                    // dto classımızın yerini tanıtıp DB den gelen pojo classımızı dto classımıza setle ve controller e bu bilgiler ile gönder diyoruz
     Optional<StudentDTO> findStudentDTOById(@Param("id") Long id);
 
 }

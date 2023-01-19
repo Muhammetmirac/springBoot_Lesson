@@ -146,7 +146,7 @@ service katmanını controller ile haberleşmesi  DTO ile  repository ile POJO c
     public ResponseEntity<Page<Student>> getAllWithPAge(@RequestParam("page") int page, // hangi page gönderilecek ... 0 dan başlar
                                                         @RequestParam("size") int size,  // page başı kaç student olacak
                                                         @RequestParam("sort") String prop,      // sıralama(sort) hangi fielda göre yapılacak
-                                                        @RequestParam("direction") Sort.Direction direction) {   // dpğaş sıralı mı yoksa özel mi
+                                                        @RequestParam("direction") Sort.Direction direction) {   // dpoal sıralı mı yoksa özel mi
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
         // bana pageable objesi lazım  ve pagereques.of methodunu çağırıyorum
         //
@@ -179,7 +179,8 @@ service katmanını controller ile haberleşmesi  DTO ile  repository ile POJO c
 
     //DB den direk DTo olarak data alabilir miyim ?
     @GetMapping("/query/dto") // http://localhost:8080/students/query/dto?id=1
-    public ResponseEntity<StudentDTO> getStudentDTO(@RequestParam("id") Long id){
+    public ResponseEntity<StudentDTO> getStudentDTO(@RequestParam("id") Long id){   //@RequestParam kulanılırken path "... query/dto?id=1"
+                                                                            // ile sonlanır. @pathvariable de ise ".../id" şeklindedir
       StudentDTO studentDTO =  studentService.findStudentDTOById(id);
       return ResponseEntity.ok(studentDTO);
     }

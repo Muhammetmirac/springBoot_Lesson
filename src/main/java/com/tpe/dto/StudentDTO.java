@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor // dolu constructorları yazma zahmetinden kurtuluyoruz
 @NoArgsConstructor // parametresiz cons yazmıyoruz
 public class StudentDTO {
-    private Long id;
+    private Long id; // DTO kullanımındaki mantık gereği güvenlik açığı olmaması için id kullanmamalıyız
 
     @NotNull(message = "first name cannot be null")
     @NotBlank(message = "first name cannot be white space")

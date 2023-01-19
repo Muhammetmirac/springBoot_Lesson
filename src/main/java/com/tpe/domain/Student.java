@@ -60,6 +60,12 @@ public class Student {
     private List<Books> books = new ArrayList<>();
 
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
 
 
 }

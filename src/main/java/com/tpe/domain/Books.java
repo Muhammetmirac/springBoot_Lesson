@@ -19,6 +19,7 @@ public class Books {
 
     //one student many book
     @JsonIgnore // json çıktıda sonsuz döngüye girilmesin diye ekledik
+
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
