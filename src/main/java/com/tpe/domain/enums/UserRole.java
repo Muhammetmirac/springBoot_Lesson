@@ -1,4 +1,4 @@
-package com.tpe.domain;
+package com.tpe.domain.enums;
 
 public enum UserRole {
     ROLE_STUDENT,

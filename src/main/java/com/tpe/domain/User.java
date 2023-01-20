@@ -27,15 +27,14 @@ public class User {
     private String lastName;
     @Column(length = 25,nullable = false, unique = true)
     private String userName;
-    @Column(length = 255,nullable = false)// length 255 olma sebebi; password
-    // haslemeye girerse karakter sayısı daha fazla olacaktır
+    @Column(length = 255,nullable = false)// length 255 olma sebebi; password  hashlemeye girerse karakter sayısı daha fazla olacaktır
     private String password;
 
     @JoinTable(name = "tbl_user_role",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns =@JoinColumn(name = "role_id") )
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)                    // tek bir user sorgusu yaptığımızda role ler de gelsin diye "eager" ekledik.
+    private Set<Role> roles = new HashSet<>(); // rollerin uniq olması için Set Generic yapı tercih edildi
 
     @JsonIgnore
     @OneToOne(mappedBy = "user")

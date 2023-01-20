@@ -1,5 +1,6 @@
 package com.tpe.domain;
 
+import com.tpe.domain.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +28,8 @@ public class Role {
     @Override
     public String toString() {
         return "Role{" +
-                "id=" + id +
-                ", name=" + name +
+
+                "name=" + name +
                 '}';
     }
 }

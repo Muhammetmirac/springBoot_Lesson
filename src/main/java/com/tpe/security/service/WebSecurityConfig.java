@@ -9,24 +9,27 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 // method seviyesinde security katmanın çalıştırmak istiyorum.  örneğin bazı metodları admin kullanabilsin
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailServiceImpl userDetailService;
+    private UserDetailsService userDetailService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().
                 authorizeHttpRequests().
-                antMatchers("/", "index.html", "/css/*", "/js/*"). // muaf tutulmasını istediğimiz requestleri belirttim
-                permitAll().
+                antMatchers("/", "index.html", "/css/*", "/js/*","/register"). // muaf tutulmasını istediğimiz requestleri belirttim
+                permitAll().    // path bazlı spring securtiy istisnası tanımladık. ust satırdaki pathler ile request geldiğinde şifre istenmeyecek
+               and().
+                authorizeRequests().antMatchers("/students/**").hasRole("ADMIN").
                 anyRequest().
                 authenticated().
                 and().

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,24 +27,24 @@ import java.util.Map;
 public class StudentController {
 
 //loglama ile ilgili objemizi oluşturuyoruz
-  Logger logger =  LoggerFactory.getLogger(StudentController.class); //logger objesi olusturduk ve hangi classlar ilgili yapacagıızı class ismini yazarak tanımladık
+  Logger logger =  LoggerFactory.getLogger(StudentController.class); //logger objesi olusturduk ve hangi classlarla ilgili yapacagıızı class ismini yazarak tanımladık
 
 
-
-
-
-    /*
- end pointlerimizi oluşturuyoruz
-  */
-
-
+//service katmanını enjekte ettik
     @Autowired // basit yapıda ilerlediğimiz için  field injection kullandık
     private StudentService studentService;
+
+
+
+        //------------------     end pointlerimizi oluşturuyoruz      ------------------
+
 
 
     //bütün öğrenciler gelsin
 
     @GetMapping() //http://localhost:8080/studens +GET()
+   // @PreAuthorize("hasRole('ADMIN')")  //ROLE_ADMIN  ---> hasRole ile sadece ADMIN yazmamız yeterli. eskiden ROLE_ADMIN yazmamız gerekirdi
+                                        // @PreAuthorize("hasRole('ADMIN')") ile bu methodu cagıranın ADMIN olması gerektiğini belirtmiş olduk
     public ResponseEntity<List<Student>> getAll() {  // respons yani dönen datalar ; student verileri ve http status kodları olur bunu da ResponseEntity ile sağlıypruz
         List<Student> students = studentService.getAll();
         return ResponseEntity.ok(students);// ok--> 200 kodunu http status kodu olarak gönderir
