@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class UserRequest {      // illa class ismi sonunda DTO olmasına gerek yok böylede kullanım mevcut
 
 
     @NotBlank(message="İsim bilgisini giriniz ")

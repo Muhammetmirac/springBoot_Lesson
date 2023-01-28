@@ -28,6 +28,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
 /*
 bu methodda bizim objelerimizi security nin anlayacağı yapıya dönüştürüyoruz
+
+Bizim userName mizi alıyor ve security nin anlayacağı UserDetails in name ine ceviriyor
+User Details in oluşması için 3 datayı maplememiz gerekir;
+        1-Username--> domainden doğrudan alırız
+        2-password--> domainden doğrudan alırız
+        3-roles--> roles GrantedAuthority çevrilip maplenmesi gerektiği için bu işlemi ek bir metodlar yapacağız
  */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {  //
@@ -50,6 +56,7 @@ bu methodda bizim objelerimizi security nin anlayacağı yapıya dönüştürüy
     }
     /*
     bu methodda parametre olarak gelen Role objelerini GrandAuthority ye dönüştürmek
+    --bu methodda user objenin iki rolü varsa List yapısında  2 adet GrantedAuthority ye cevirip gönderiyor.
      */
     private static List<SimpleGrantedAuthority> buildGrantedAuthorities(final Set<Role> roles){ // final yazmamızın nedeni setlenmeden kullanılmasını istemediğimizden
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();

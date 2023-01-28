@@ -17,31 +17,46 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 // method seviyesinde security katmanın çalıştırmak istiyorum.  örneğin bazı metodları admin kullanabilsin
+
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailService;
 
+
+    /*
+    csrf ---> browserları kullanırken art niyetli yazılımlar ile aynı anda acık sekmelerde erişim sağlayıp o esnada banka işlemleri gibi açık olan sayfalarda
+    işlem yapılması
+    --> bu güvenlik açığından dolayı REstFull API da default da açık iken update işlemi gerçekleşmiyor. bizde disable hale getiriyoruz
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().
-                authorizeHttpRequests().
+        http.csrf().disable().// csrf i etkisizleştir
+                authorizeHttpRequests(). // Gelen requesti yetki kontolu yap
                 antMatchers("/", "index.html", "/css/*", "/js/*","/register"). // muaf tutulmasını istediğimiz requestleri belirttim
                 permitAll().    // path bazlı spring securtiy istisnası tanımladık. ust satırdaki pathler ile request geldiğinde şifre istenmeyecek
                and().
                 authorizeRequests().antMatchers("/students/**").hasRole("ADMIN").
-                anyRequest().
-                authenticated().
+                anyRequest(). //hangisi gelirse gelsin
+                authenticated(). //authenticat et
                 and().
-                httpBasic();// Basic Auth
+                httpBasic();// Basic Auth old bildiriyoruz
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);// parantez içerisindeki değer ne kadar yüksekse şifre zorlaşıyor. 15 üstü oluşturması uzun sürer. 10-11-12 iyidir
+    public PasswordEncoder passwordEncoder() { //PasswordEncoder security nin kendi classıdır
+        return new BCryptPasswordEncoder(10);// parantez içerisindeki değer(4-31 arası) ne kadar yüksekse şifre zorlaşıyor encode süresi uzuyor. 15 üstü oluşturması uzun sürer. 10-11-12 iyidir
 
     }
 
+
+    /*
+     ilgili pdf dosyasında 4. ve 9. adımda gösterildiği gibi
+     provider e 2 şeyi tantırız
+    1- UserDetailsServici---->
+    2- PasswordEncoder --> bir üst metodda tanımladık 62. satırda tanıtıyoruz
+
+     */
     @Bean
     public DaoAuthenticationProvider authProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

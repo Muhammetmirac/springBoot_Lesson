@@ -14,24 +14,24 @@ import java.util.*;
 public class UserService {
 
     @Autowired
-    private RoleService roleService;
+    private RoleService roleService; // User kaydedilirken rolunu setlenmesi için enjekte edildi
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder; // passwrod encode edileceği  passwordEncoder emjekte edildi
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository;// katmanlı yapıda service in habeleşeceği katman repository olduğu için enjekte edildi
 
     public void saveUser(UserRequest userRequest) {
-        User myUser = new User();
-        myUser.setFirstName(userRequest.getFirstName());
+        User myUser = new User(); // Biz dto classı ile kullanıcıdan gelen bilgileri DB göndermek için kendi entity clasımız olan User objesi oluşturuluyor
+        myUser.setFirstName(userRequest.getFirstName()); // fieldleri set ediyoruz
         myUser.setLastName(userRequest.getLastName());
         myUser.setUserName(userRequest.getUserName());
         // myUser.setPassword(userRequest.getPassword());  // password encode edilmeden setlenmemeli
         String password = userRequest.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
-        myUser.setPassword(encodedPassword);
+        myUser.setPassword(encodedPassword); // password encode edilerek setlendi
 
         // Role setlenmeli
         Role role = roleService.getRoleByType(UserRole.ROLE_ADMIN);

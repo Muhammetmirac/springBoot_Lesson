@@ -8,17 +8,21 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
+@RestController // RestFulAPI yapısı oldugunu bildirmiş oluyoruz
 public class UserController {
+
 
     @Autowired
     private UserService userService;
 
     @PostMapping
     @RequestMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody UserRequest userRequest){
-
+    public ResponseEntity<String> register(@Valid @RequestBody UserRequest userRequest){ // User classının içerisinde "id" bilgisi vardr.
+                                                        //Register işlemi için id dışındaki bilgiler gereklidir.
+                                                        //O yüzden DTO classı olan UserRequest classını oluşturduk ve lazım olan fieldleri tanımladık
+                                                        //DTO classların sonuna DTO her zaman eklenmez.
         userService.saveUser(userRequest);
+
         String myResponse = "Kullanıcı kaydı başarıyla gerçekleşmiştir";
         return ResponseEntity.ok(myResponse); // ya da new ResponseEntity<>(myResponse,HttpStatus.CREATED) de olur
 

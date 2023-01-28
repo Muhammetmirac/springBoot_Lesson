@@ -43,7 +43,7 @@ public class StudentController {
     //bütün öğrenciler gelsin
 
     @GetMapping() //http://localhost:8080/studens +GET()
-   // @PreAuthorize("hasRole('ADMIN')")  //ROLE_ADMIN  ---> hasRole ile sadece ADMIN yazmamız yeterli. eskiden ROLE_ADMIN yazmamız gerekirdi
+   // @PreAuthorize("hasRole('ADMIN')")  //ROLE_ADMIN  ---> hasRole ile sadece ADMIN yazmamız yeterli. eski versiyonlarda ROLE_ADMIN yazmamız gerekirdi
                                         // @PreAuthorize("hasRole('ADMIN')") ile bu methodu cagıranın ADMIN olması gerektiğini belirtmiş olduk
     public ResponseEntity<List<Student>> getAll() {  // respons yani dönen datalar ; student verileri ve http status kodları olur bunu da ResponseEntity ile sağlıypruz
         List<Student> students = studentService.getAll();
